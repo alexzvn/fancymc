@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@nuxt/content": "^2.12.1",
+    "@nuxt/image": "^1.7.0",
+    "@nuxthq/studio": "^2.0.2",
     "nuxt": "^3.12.1"
   }
 }
