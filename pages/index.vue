@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100/95 fixed z-10" style="backdrop-filter: blur(.25rem);">
+  <div class="navbar bg-base-100/80 fixed z-10" style="backdrop-filter: blur(.75rem);">
     <div class="flex container mx-auto">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl font-minecraft font-bold text-stone-400">FancyMC</a>
@@ -21,10 +21,10 @@
     </div>
   </div>
 
-  <div class="h-16"></div>
+  <div class="h-16" />
 
 
-  <div class="bg-[url('/media/img/wallpaper-2.png')] bg-center bg-no-repeat py-32 md:py-40">
+  <div class="bg-[url('/media/img/wallpaper-3.png')] bg-center bg-cover bg-no-repeat py-32 md:py-40">
     <div class="card bg-base-200/90 max-w-3xl mx-auto border-t-2 border-zinc-600" style="backdrop-filter: blur(.25rem);">
       <NuxtImg class="absolute -top-32 left-20 md:-left-24 max-w-60" src="/media/img/axolotlmount.png" />
 
@@ -34,34 +34,45 @@
 
         <div class="grid md:grid-cols-2 place-content-center md:place-content-start gap-5">
 
-          <div class="form-control mt-5 font-mono place-content-center">
-            <label class="label">Chơi ngay tại</label>
+          <div>
+            <div class="form-control mt-5 font-mono place-content-center">
+              <label class="label">Chơi ngay tại</label>
 
-            <div class="flex">
-              <div class="avatar" :class="status.online ? 'online' : 'offline'">
-                <div class="w-12 rounded">
-                  <img :src="status.icon" />
+              <div class="flex">
+                <div class="avatar" :class="status.online ? 'online' : 'offline'">
+                  <div class="w-12 rounded">
+                    <img :src="status.icon" />
+                  </div>
                 </div>
+
+                <label class="input input-bordered font-mono flex ml-1">
+                  <input class="grow" type="text" value="play.fancymc.net" readonly />
+                  
+                  <UseClipboard v-slot="{ copy, copied }">
+                    <div class="py-2 text-3xl cursor-pointer" @click="copy('play.fancymc.net')">
+                      <Icon v-if="!copied" name="pixelarticons:copy" />
+                      <Icon v-else name="pixelarticons:check" class="text-success" />
+                    </div>
+                  </UseClipboard>
+
+                </label>
               </div>
 
-              <label class="input input-bordered font-mono flex ml-1">
-                <input class="grow" type="text" value="play.fancymc.net" readonly />
-                
-                <UseClipboard v-slot="{ copy, copied }">
-                  <div class="py-2 text-3xl cursor-pointer" @click="copy('play.fancymc.net')">
-                    <Icon v-if="!copied" name="pixelarticons:copy" />
-                    <Icon v-else name="pixelarticons:check" class="text-success" />
-                  </div>
-                </UseClipboard>
-
+              <label v-if="status.online" class="label text-sm">
+                <span class="text-success">Server đang online với <small class="text-warning">{{ status.players.online }}</small> người chơi</span>
               </label>
+              <label v-else class="label text-error text-sm">Server đang được bảo trì ...</label>
+
             </div>
 
-            <label v-if="status.online" class="label text-sm">
-              <span class="text-success">Server đang online với <small class="text-warning">{{ status.players.online }}</small> người chơi</span>
-            </label>
-            <label v-else class="label text-error text-sm">Server đang được bảo trì ...</label>
-
+            <NuxtLink to="https://tlauncher.org/installer">
+              <Button class="mt-5 primary group">
+                <span class="flex">
+                  Tải TLauncher ngay
+                  <Icon name="pixelarticons:chevron-right" class="transition size-6 group-hover:translate-x-2" />
+                </span>
+              </Button>
+            </NuxtLink>
           </div>
 
           <div class="mt-7">
