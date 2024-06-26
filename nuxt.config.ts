@@ -9,10 +9,15 @@ export default defineNuxtConfig({
     '@nuxthq/studio',
     "@nuxt/image",
     '@nuxtjs/tailwindcss',
-    "@nuxt/icon"
+    "@nuxt/icon",
+    "@nuxtjs/seo"
   ],
 
   app: {
-    rootAttrs: { 'data-theme': 'fancy' }
-  }
+    rootAttrs: { 'data-theme': 'fancy' },
+
+    head: {
+      title: 'FancyMC - Server minecraft tại Việt Nam'
+    }
+  },
 })

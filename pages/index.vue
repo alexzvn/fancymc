@@ -101,4 +101,11 @@ import { useServerStatus } from '~/composables/useServerStatus'
 import { UseClipboard } from '@vueuse/components'
 
 const status = await useServerStatus()
+
+useSeoMeta({
+  ogLocale: 'vi_VN',
+  ogImage: '/media/img/atlanta-banner.png',
+  ogSiteName: 'FancyMC',
+})
+
 </script>
