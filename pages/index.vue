@@ -32,8 +32,9 @@
         <h1 v-if="status" class="justify-center text-center" v-html="status.motd.html"></h1>
         <h1 v-else class="card-title justify-center">Server Minecraft Việt Nam FancyMC</h1>
 
-        <div class="grid md:grid-cols-2">
-          <div class="form-control mt-5 font-mono">
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <div class="form-control mt-5 font-mono place-content-center">
             <label class="label">Chơi ngay tại</label>
 
             <div class="flex">
@@ -61,6 +62,10 @@
             </label>
             <label v-else class="label text-error text-sm">Server đang được bảo trì ...</label>
 
+          </div>
+
+          <div class="mt-7">
+            <iframe src="https://discord.com/widget?id=1141681557959090218&theme=dark" height="200" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
           </div>
         </div>
 
