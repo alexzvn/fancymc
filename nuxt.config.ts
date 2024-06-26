@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@nuxtjs/tailwindcss',
     "@nuxt/icon",
-    "@nuxtjs/seo"
+    "@sidebase/nuxt-auth"
   ],
 
   app: {
@@ -20,4 +20,19 @@ export default defineNuxtConfig({
       title: 'FancyMC - Server minecraft tại Việt Nam'
     }
   },
+
+  runtimeConfig: {
+    database: {
+      host: 'localhost',
+      name: 'paper_global',
+      user: 'root',
+      pass: 'abc@123'
+    }
+  },
+
+  auth: {
+    provider: {
+      type: 'local'
+    }
+  }
 })
