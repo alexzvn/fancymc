@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+    font-family: 'Minecraft Seven 2';
+    src: url('/font/MinecraftSevenCyrillicrussian.woff') format('woff'), /* Modern Browsers */
+         url('/font/Minecraft\ Seven_2.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('/font/MinecraftSevenCyrillicrussian.svg') format('svg'); /* Legacy iOS */
+}
+
+.font-minecraft {
+    font-family: 'Minecraft Seven 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
