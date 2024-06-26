@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100/90 fixed z-10" style="backdrop-filter: blur(.25rem);">
+  <div class="navbar bg-base-100/95 fixed z-10" style="backdrop-filter: blur(.25rem);">
     <div class="flex container mx-auto">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl font-minecraft font-bold text-stone-400">FancyMC</a>
@@ -24,7 +24,7 @@
   <div class="h-16"></div>
 
 
-  <div class="bg-[url('/media/img/wallpaper.png')] bg-center bg-no-repeat py-32 md:py-40">
+  <div class="bg-[url('/media/img/wallpaper-2.png')] bg-center bg-no-repeat py-32 md:py-40">
     <div class="card bg-base-200/90 max-w-3xl mx-auto border-t-2 border-zinc-600" style="backdrop-filter: blur(.25rem);">
       <NuxtImg class="absolute -top-32 left-20 md:-left-24 max-w-60" src="/media/img/axolotlmount.png" />
 
