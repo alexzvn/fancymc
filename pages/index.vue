@@ -26,8 +26,6 @@
 
   <div class="bg-[url('/media/img/wallpaper-3.png')] bg-center bg-cover bg-no-repeat py-32 md:py-40">
     <div class="card bg-base-200/90 max-w-3xl mx-auto border-t-2 border-zinc-600" style="backdrop-filter: blur(.25rem);">
-      <NuxtImg class="absolute -top-32 left-20 md:-left-24 max-w-60" src="/media/img/axolotlmount.png" />
-
       <div class="card-body">
         <h1 v-if="status" class="justify-center text-center" v-html="status.motd.html"></h1>
         <h1 v-else class="card-title justify-center">Server Minecraft Việt Nam FancyMC</h1>
@@ -86,10 +84,11 @@
   </div>
 
 
-  <div class="min-h-screen bg-black/70 py-20">
-    <div class="container max-w-7xl mx-auto px-5 lg:px-0">
+  <div class="min-h-screen bg-gradient-to-t from-black to-base-100 py-20">
+    
+    <div class="container max-w-7xl mx-auto px-5">
       <div class="grid lg:grid-cols-2 gap-5 md:gap-10">
-        <NuxtImg src="/media/img/atlanta-banner.png" />
+        <NuxtImg class="aspect-[5/3] w-full object-cover" src="/media/img/atlanta-banner.png" />
 
         <div>
           <h3 class="text-2xl font-bold mt-5">
@@ -106,9 +105,42 @@
           </Button>
         </div>
       </div>
-    </div>
 
+      <div class="grid lg:grid-cols-2 gap-5 md:gap-10 mt-10">
+        <NuxtImg class="aspect-[5/3] w-full object-cover" src="/media/img/smp-banner.png" />
+        <div>
+          <h3 class="text-2xl font-bold mt-5">
+            Chế độ chơi <span class="font-minecraft bg-gray-900 px-2 py-1">Survival Multiplayer Dungeon</span>
+          </h3>
+
+          <p class="mt-5 leading-loose font-mono">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit numquam maxime aliquid id officiis officia distinctio, iste, quia, aspernatur reiciendis dolore. Saepe exercitationem labore quae corporis doloribus, expedita voluptate eos?</p>
+        
+          <Button class="mt-5 group">
+           <span class="flex">
+              Khám phá ngay
+              <Icon name="pixelarticons:chevron-right" class="transition size-6 group-hover:translate-x-2" />
+            </span>
+          </Button>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <footer class="footer bg-base-100 text-neutral-content p-5">
+    <div class="container mx-auto flex justify-between px-5">
+      <div class="flex space-x-5">
+        <img :src="status.icon" />
+        <p class="leading-6 mt-2">
+          <strong>Play.FancyMC.net</strong>
+          <br />
+          Server Minecraft Việt Nam
+        </p>
+      </div>
+
+      <a href="https://alexzvn.me" target="_blank" class="mt-8 opacity-60 hover:opacity-90 transition duration-150">@alexzvn</a>
+    </div>
+  </footer>
 </template>
 
 <script lang="ts" setup>

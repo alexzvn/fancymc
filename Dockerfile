@@ -36,7 +36,7 @@ RUN rm -rf node_modules && \
 
 
 # Final stage for app image
-FROM oven/bun:${BUN_VERSION}-alpine
+FROM base
 
 # Copy built application
 COPY --from=build /app /app
