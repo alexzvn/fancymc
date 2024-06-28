@@ -13,23 +13,24 @@
             <form class="mt-6" @click.prevent>
               <div class="form-control">
                 <label class="label">Username</label>
-                <input type="text" class="input input-bordered font-mono" name="username" placeholder="Tên đăng nhập">
+                <input v-model="form.username" @focus="form.error = ''" type="text" class="input input-bordered font-mono" placeholder="Tên đăng nhập">
+                <label v-if="form.error" class="label text-error">{{ form.error }}</label>
               </div>
 
               <div class="form-control">
                 <label class="label">Password</label>
-                <input type="password" class="input input-bordered font-mono" name="username" placeholder="Mật khẩu của bạn">
+                <input v-model="form.password" type="password" class="input input-bordered font-mono" placeholder="Mật khẩu của bạn">
               </div>
 
               <div class="text-center">
-                <Button class="mt-10">
+                <Button class="mt-10" @click="login">
                   <span class="mx-10">Đăng nhập</span>
                 </Button>
               </div>
             </form>
           </div>
 
-          <NuxtImg class="hidden md:block min-h-[60vh] object-cover" src="/media/img/wallpaper-3.png" />
+          <NuxtImg class="hidden md:block min-h-[60vh] h-full object-cover" src="/media/img/wallpaper-3.png" />
         
         </div>
       </div>
@@ -45,4 +46,14 @@
 
 <script lang="ts" setup>
 import Button from '~/components/primitives/Button.vue'
+
+const form = reactive({ username: '', password: '', error: '' })
+
+const { signIn, data: auth } = useAuth()
+
+const login = async () => {
+  return signIn(form, { redirect: false })
+    .then(() => { navigateTo('/') })
+    .catch(e => form.error = e.data.message)
+}
 </script>

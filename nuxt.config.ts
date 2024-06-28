@@ -22,6 +22,10 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    app: {
+      secret: '0x00x0x0x0x0x'
+    },
+
     database: {
       host: 'localhost',
       name: 'paper_global',
@@ -31,8 +35,19 @@ export default defineNuxtConfig({
   },
 
   auth: {
+    baseURL: '/api/auth',
     provider: {
-      type: 'local'
+      type: 'local',
+      sessionDataType: {
+        id: 'number',
+        email: 'string|null',
+
+        /** Lowercase of username  */
+        username: 'string',
+    
+        /** Username which may contain some upper case */
+        realname: 'string',
+      }
     }
   }
 })
