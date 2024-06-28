@@ -1,18 +1,27 @@
 <template>
   <div class="navbar bg-base-100/80 fixed z-10" style="backdrop-filter: blur(.75rem);">
-    <div class="flex container mx-auto">
+    <div class="flex max-w-7xl w-full mx-auto">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl font-minecraft font-bold text-stone-400">FancyMC</a>
+        <NuxtLink to="/" class="btn btn-ghost text-xl font-minecraft font-bold text-stone-400">FancyMC</NuxtLink>
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
           <li><a>Đóng góp</a></li>
-          <li>
+          <li v-if="!auth">
             <details>
               <summary>Tài khoản</summary>
-              <ul class="bg-base-100 rounded-t-none p-2 w-36">
-                <li><a>Đăng nhập</a></li>
+              <ul class="bg-base-100 rounded-t-none p-2 w-36 -translate-x-10" @click="(e: any) => e.target.closest('details').open = false">
+                <li><NuxtLink to="/auth/login">Đăng nhập</NuxtLink></li>
                 <li><a>Đăng ký</a></li>
+              </ul>
+            </details>
+          </li>
+
+          <li v-if="auth">
+            <details>
+              <summary>Hi, {{ auth.realname }}</summary>
+              <ul class="bg-base-100 rounded-t-none p-2 w-36 -translate-x-10" @click="(e: any) => e.target.closest('details').open = false">
+                <li class="text-error" @click="signOut({ redirect: false })"><a>Đăng xuất</a></li>
               </ul>
             </details>
           </li>
@@ -44,4 +53,5 @@
 
 <script lang="ts" setup>
 const status = useServerStatus()
+const { data: auth, signOut } = useAuth()
 </script>
