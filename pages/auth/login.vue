@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-black to-base-100">
+  <div class="min-h-screen bg-gradient-to-b from-black to-base-100 relative overflow-hidden">
+
+    <div v-for="star in 200" class="star"></div>
+
     <div class="container mx-auto pt-24 px-5">
 
       <div class="card bg-base-200/90 backdrop-blur-sm max-w-5xl mx-auto shadow-2xl">
@@ -57,3 +60,69 @@ const login = async () => {
     .catch(e => form.error = e.data.message)
 }
 </script>
+
+<style lang="scss" scoped>
+.star {
+  position: absolute;
+  background-color: white;
+}
+
+@function random_number($min, $max) {
+  $random: random($min) + $max - $min;
+  @return $random;
+}
+
+@mixin hashed-animation($name, $min-duration, $max-duration) {
+  $duration: random_number($min-duration, $max-duration) + s;
+  animation: $name #{$duration} linear infinite;
+}
+
+
+@for $i from 1 through 200 {
+  .star:nth-of-type(#{$i}) {
+    $num: ($i % 3) + 1;
+
+    top: random(101) - 1 + vh;
+    left: random(101) - 1 + vw;
+    width: random(2) + px;
+    height: random(2) + px;
+    opacity: calc(random(50) / 100 + 0.5);
+    @include hashed-animation(animStar#{$num}, 20, 60);
+  }
+}
+
+@keyframes animStar1 {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes animStar2 {
+  0% {
+    transform: translateY(-100vh) translateX(-10vw);
+  }
+  50% {
+    transform: translateY();
+  }
+  100% {
+    transform: translateY(100vh) translateX(10vw);
+  }
+}
+
+@keyframes animStar3 {
+  0% {
+    transform: translateY(-100vh) translateX(10vw);
+  }
+  50% {
+    transform: translateY();
+  }
+  100% {
+    transform: translateY(200vh) translateX(-10vw);
+  }
+}
+</style>
+
