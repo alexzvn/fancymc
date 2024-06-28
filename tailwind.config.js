@@ -34,10 +34,10 @@ export default {
           warning: '#ffa41f',
           error: '#dd1218',
 
-          '--rounded-box': 0,
-          '--rounded-btn': 0,
-          '--rounded-badge': 0,
-          '--tab-radius': 0,
+          '--rounded-box': 3,
+          '--rounded-btn': 2,
+          '--rounded-badge': 1,
+          '--tab-radius': 2,
           '--border-btn': '1px',
           '--tab-border': '1px',
         }

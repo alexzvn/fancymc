@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="h-16" />
+  <div class="h-16 bg-gradient-to-b from-base-100 to-black" />
 
 
   <NuxtPage />
