@@ -39,5 +39,7 @@ export type ServerStatus = {
 }
 
 export const useServerStatus = () => {
-  return $fetch<ServerStatus>('https://api.mcstatus.io/v2/status/java/play.fancymc.net')
+  const { data } = useAsyncData('fancy:status', () => $fetch<ServerStatus>('https://api.mcstatus.io/v2/status/java/play.fancymc.net'))
+
+  return data as Ref<ServerStatus>
 }
