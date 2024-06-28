@@ -27,6 +27,7 @@
     "@flydotio/dockerfile": "^0.5.7",
     "@iconify-json/pixelarticons": "^1.1.12",
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@types/bun": "^1.1.6",
     "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.6",
     "drizzle-kit": "^0.22.7",

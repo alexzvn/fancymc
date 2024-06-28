@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -24,6 +26,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     app: {
       secret: '0x00x0x0x0x0x'
+    },
+
+    votifier: {
+      host: 'proxy.fancymc.net',
+      port: 8192,
+      publicKey: fs.readFileSync('./public.key').toString()
     },
 
     database: {
