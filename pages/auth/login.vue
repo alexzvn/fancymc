@@ -27,7 +27,12 @@
 
               <div class="text-center">
                 <Button class="mt-10" @click="login">
-                  <span class="mx-10">Đăng nhập</span>
+                  <span class="mx-7 flex">
+                    <span class="mt-0.5">Đăng nhập</span>
+                    <span v-if="loading" class="mt-1 ml-2 scale-125">
+                      <Icon class="size-5 animate-spin" name="pixelarticons:loader" />
+                    </span>
+                  </span>
                 </Button>
               </div>
             </form>
@@ -53,15 +58,23 @@ import Button from '~/components/primitives/Button.vue'
 const form = reactive({ username: '', password: '', error: '' })
 
 const { signIn, data: auth } = useAuth()
+const loading = ref(false)
 
 const login = async () => {
+  if (loading.value === true) {
+    return
+  }
+
+  loading.value = true
+
   return signIn(form, { redirect: false })
     .then(() => { navigateTo('/') })
     .catch(e => form.error = e.data.message)
+    .finally(() => loading.value = false)
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .star {
   position: absolute;
   background-color: white;
