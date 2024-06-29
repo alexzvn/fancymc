@@ -2,13 +2,15 @@
 import { drizzle } from 'drizzle-orm/mysql2'
 export { sql, eq, and, or } from 'drizzle-orm'
 import mysql from 'mysql2/promise'
+import { migrate } from 'drizzle-orm/mysql2/migrator' 
 import { mysqlTable, varchar, mediumint, bigint, double, float, smallint } from 'drizzle-orm/mysql-core'
+import * as Schema from './schema/schema'
 
 const users = mysqlTable('authme', {
   id: mediumint('id').primaryKey().autoincrement().notNull(),
   username: varchar('username', { length: 255 }).unique().notNull(),
   realname: varchar('realname', { length: 255 }).unique().notNull(),
-  password: varchar('password', { length: 255 }).unique().notNull(),
+  password: varchar('password', { length: 255 }).notNull(),
   ip: varchar('ip', { length: 40 }),
   last_login: bigint('lastlogin', { mode: 'number', unsigned: true }),
   x: double('x').default(0),
@@ -23,10 +25,9 @@ const users = mysqlTable('authme', {
   is_logged: smallint('isLogged', { unsigned: true }).default(0),
   has_session: smallint('hasSession', { unsigned: true }).default(0),
   totp: varchar('totp', { length: 32 })
-
 })
 
-export const schema = { users }
+export const schema = { users, ...Schema }
 
 const database = () => {
   const { database } = useRuntimeConfig()
@@ -39,6 +40,10 @@ const database = () => {
   })
 }
 
-export const useDrizzle = async () => drizzle(await database(), { mode: 'default' })
+export const useDrizzle = async () => drizzle(await database(), { mode: 'default', schema })
+
+export const useMigration = async () => {
+  return migrate(await useDrizzle(), { migrationsFolder: 'server/utils/schema/migrations' })
+}
 
 export type User = typeof schema.users.$inferSelect

@@ -9,7 +9,6 @@ const extractToken = (authHeaderValue: string) => {
   return token
 }
 
-
 const ensureAuth = (event: H3Event) => {
   const authHeaderValue = getRequestHeader(event, 'authorization')
   if (typeof authHeaderValue === 'undefined') {
@@ -26,16 +25,32 @@ const ensureAuth = (event: H3Event) => {
   }
 }
 
-export default defineEventHandler(async (event) => {
+export const obtainUser = async (event: H3Event) => {
   const payload = ensureAuth(event)
 
   const drizzle = await useDrizzle()
 
-  const [user] = await drizzle.select().from(schema.users).where(eq(schema.users.id, payload.id))
+  const session = await drizzle.query.sessions.findFirst({
+    where: ({ id }, { eq }) => eq(id, payload.id)
+  })
+
+  if (!session) {
+    throw createError({ statusCode: 403, statusMessage: 'User appear to be invalid' })
+  }
+
+  const user = await drizzle.query.users.findFirst({
+    where: ({ id }, { eq }) => eq(id, session.user_id)
+  })
 
   if (!user) {
     throw createError({ statusCode: 403, statusMessage: 'User appear to be invalid' })
   }
+
+  return { user, session, drizzle }
+}
+
+export default defineEventHandler(async (event) => {
+  const { user } = await obtainUser(event)
 
   return { ...Misc.pick(user, 'id', 'email', 'username', 'realname') }
 })

@@ -24,17 +24,22 @@ export default eventHandler(async event => {
   const drizzle = await useDrizzle()
   const jwt = useJWT()
 
-  const [user] = await drizzle.select().from(schema.users)
-    .where(eq(schema.users.username, body.username.toLowerCase()))
+  const user = await drizzle.query.users.findFirst({
+    where: eq(schema.users.username, body.username.toLowerCase())
+  })
 
   if (!user || !jwt.password.check(body.password, user.password)) {
     throw falseError
   }
 
+  const [session] = await drizzle.insert(schema.sessions).values({
+    user_id: user.id
+  })
+
 
   return {
     ... Misc.pick(user, 'id', 'email', 'username', 'realname'),
-    token: jwt.sign({ id: user.id, mode: 'access' }, {
+    token: jwt.sign({ id: session.insertId, mode: 'access' }, {
       algorithm: 'HS256' as 'none',
       expiresIn: '3d'
     })  
