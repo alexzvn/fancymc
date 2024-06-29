@@ -3,6 +3,7 @@ import fs from 'fs'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  experimental: { viewTransition: true },
 
   css: ['assets/style.css'],
 
