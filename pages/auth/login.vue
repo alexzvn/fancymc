@@ -55,6 +55,8 @@
 <script lang="ts" setup>
 import Button from '~/components/primitives/Button.vue'
 
+definePageMeta({ layout: 'auth' })
+
 const form = reactive({ username: '', password: '', error: '' })
 
 const { signIn, data: auth } = useAuth()
