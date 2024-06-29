@@ -46,6 +46,8 @@ export default defineNuxtConfig({
     baseURL: '/api/auth',
     provider: {
       type: 'local',
+      pages: { login: '/auth/login' },
+
       sessionDataType: {
         id: 'number',
         email: 'string|null',

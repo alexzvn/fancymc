@@ -1,6 +1,6 @@
 import type { sign, verify } from 'jsonwebtoken'
 import JWT from 'jsonwebtoken'
-import sha256 from 'crypto-js/sha256'
+import sha256 from 'crypto-js/sha256.js'
 import { timingSafeEqual, randomBytes } from 'node:crypto'
 
 export const useJWT = () => {
