@@ -29,10 +29,16 @@ const users = mysqlTable('authme', {
 
 export const schema = { users, ...Schema }
 
-const database = () => {
+let connection: Awaited<ReturnType<typeof mysql.createConnection>>
+
+const database = async () => {
   const { database } = useRuntimeConfig()
 
-  return mysql.createConnection({
+  if (connection) {
+    return connection
+  }
+
+  return connection = await mysql.createConnection({
     host: database.host,
     database: database.name,
     user: database.user,
