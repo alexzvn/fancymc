@@ -8,12 +8,15 @@ export default defineEventHandler(async event => {
   const ip = getIP(event)
 
   const attend = await drizzle.query.attends.findFirst({
-    where: ({ user_id }, { eq }) => eq(user_id, user.id)
+    where: ({ user_id, vote_ip }, { eq, or }) => or(
+      eq(user_id, user.id), eq(vote_ip, ip)
+    )
   })
 
   if (! attend) {
     await drizzle.insert(schema.attends).values({
-      user_id: user.id
+      user_id: user.id,
+      vote_ip: ip
     })
 
     vote(user.realname, ip)
@@ -29,7 +32,7 @@ export default defineEventHandler(async event => {
   }
 
   await drizzle.update(schema.attends)
-    .set({ updated_at: new Date })
+    .set({ updated_at: new Date, vote_ip: ip })
     .where(eq(schema.attends.user_id, user.id))
 
   vote(user.realname, ip)

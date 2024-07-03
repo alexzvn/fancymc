@@ -15,5 +15,6 @@ export const forgot = mysqlTable('fancy_forgot_passwords', {
 
 export const attends = mysqlTable('fancy_attends', {
   user_id: mediumint('id').primaryKey().notNull(),
+  vote_ip: varchar('ip', { length: 255 }),
   updated_at: datetime('updated_at', { mode: 'date' }).$default(() => new Date()).$onUpdate(() => new Date)
 })

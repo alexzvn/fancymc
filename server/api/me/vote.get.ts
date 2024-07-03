@@ -2,9 +2,12 @@ import dayjs from 'dayjs'
 
 export default defineEventHandler(async (event) => {
   const { user, drizzle } = await event.context.auth()
+  const ip = getIP(event)
 
   const attend = await drizzle.query.attends.findFirst({
-    where: ({ user_id }, { eq }) => eq(user_id, user.id)
+    where: ({ user_id, vote_ip }, { eq, or }) => or(
+      eq(user_id, user.id), eq(vote_ip, ip)
+    )
   })
 
   if (! attend) {

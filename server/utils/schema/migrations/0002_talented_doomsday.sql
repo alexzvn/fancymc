@@ -1,0 +1,1 @@
+ALTER TABLE `fancy_attends` ADD `ip` varchar(255);
