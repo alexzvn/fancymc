@@ -59,7 +59,7 @@ definePageMeta({ layout: 'auth' })
 
 const form = reactive({ username: '', password: '', error: '' })
 const { query } = useRoute()
-const { signIn, data: auth } = useAuth()
+const { signIn, auth } = useAuth()
 const loading = ref(false)
 const redirect = computed(() => [query.redirect].flat().at(0) ?? '/')
 
@@ -70,7 +70,7 @@ const login = async () => {
 
   loading.value = true
 
-  return signIn(form, { redirect: false })
+  return signIn(form)
     .then(() => { navigateTo(redirect.value) })
     .catch(e => form.error = e.data.message)
     .finally(() => loading.value = false)

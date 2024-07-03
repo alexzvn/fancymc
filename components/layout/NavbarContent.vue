@@ -17,7 +17,7 @@
           <summary>Hi, {{ auth.realname }}</summary>
           <ul class="bg-base-100 rounded-t-none p-2 w-36 -translate-x-10" @click="(e: any) => e.target.closest('details').open = false">
             <li><a @click="gift.open()">Nhận quà</a></li>
-            <li class="text-error" @click="signOut({ redirect: false })"><a>Đăng xuất</a></li>
+            <li class="text-error" @click="signOut()"><a>Đăng xuất</a></li>
           </ul>
         </details>
       </li>
@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import AttendGiftModal from '~/components/features/AttendGiftModal.vue'
 
-const { data: auth, signOut } = useAuth()
+const { auth, signOut } = useAuth()
 
 const gift = ref() as Ref<InstanceType<typeof AttendGiftModal>>
 </script>

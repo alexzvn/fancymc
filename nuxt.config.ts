@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@nuxtjs/tailwindcss',
     "@nuxt/icon",
-    "@sidebase/nuxt-auth"
   ],
 
   app: {
@@ -40,25 +39,6 @@ export default defineNuxtConfig({
       name: 'paper_global',
       user: 'root',
       pass: 'abc@123'
-    }
-  },
-
-  auth: {
-    baseURL: '/api/auth',
-    provider: {
-      type: 'local',
-      pages: { login: '/auth/login' },
-
-      sessionDataType: {
-        id: 'number',
-        email: 'string|null',
-
-        /** Lowercase of username  */
-        username: 'string',
-    
-        /** Username which may contain some upper case */
-        realname: 'string',
-      }
     }
   }
 })
