@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import Button from '~/components/primitives/Button.vue'
+import Button from '~/components/primitive/Button.vue'
 import { useServerStatus } from '~/composables/useServerStatus'
 import { UseClipboard } from '@vueuse/components'
 

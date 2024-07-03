@@ -1,7 +1,7 @@
 import { createPublicKey, publicEncrypt, constants } from 'node:crypto'
 import { connect } from 'node:net'
 
-export const useVote = (site = 'FancyMC') => {
+export const useVote = (site = 'fancymc.net') => {
   const { votifier } = useRuntimeConfig()
 
   const key = createPublicKey(votifier.publicKey)

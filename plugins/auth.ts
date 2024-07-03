@@ -1,6 +1,10 @@
 
-export default defineNuxtPlugin(ctx => {
+export default defineNuxtPlugin(async () => {
   const { data: state, loading, setToken, token } = useAuthState()
+
+  if (import.meta.browser && import.meta.dev) {
+    Object.assign(window, { useRequest })
+  }
 
   const cookie = useCookie('auth.token')
 
@@ -12,7 +16,7 @@ export default defineNuxtPlugin(ctx => {
     return
   }
 
-  useAsyncData('custom.auth.user', async () => {
+  await useAsyncData('custom.auth.user', async () => {
     loading.value = true
 
     return $fetch('/api/auth/session', { method: 'GET', headers: { Authorization: token.value! } })

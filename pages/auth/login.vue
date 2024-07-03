@@ -13,20 +13,20 @@
               Đăng nhập <span class="font-minecraft text-white">FancyMC</span>
             </h1>
           
-            <form class="mt-6" @click.prevent>
+            <form class="mt-6" @submit.prevent="login">
               <div class="form-control">
                 <label class="label">Username</label>
-                <input v-model="form.username" @focus="form.error = ''" type="text" class="input input-bordered font-mono" placeholder="Tên đăng nhập">
+                <input v-model="form.username" @focus="form.error = ''" type="text" class="input input-bordered font-mono" placeholder="Tên đăng nhập" required>
                 <label v-if="form.error" class="label text-error">{{ form.error }}</label>
               </div>
 
               <div class="form-control">
                 <label class="label">Password</label>
-                <input v-model="form.password" type="password" class="input input-bordered font-mono" placeholder="Mật khẩu của bạn">
+                <input v-model="form.password" type="password" class="input input-bordered font-mono" placeholder="Mật khẩu của bạn" required>
               </div>
 
               <div class="text-center">
-                <Button class="mt-10" @click="login">
+                <Button class="mt-10" type="submit">
                   <span class="mx-7 flex">
                     <span class="mt-0.5">Đăng nhập</span>
                     <span v-if="loading" class="mt-1 ml-2 scale-125">
@@ -53,14 +53,15 @@
 </template>
 
 <script lang="ts" setup>
-import Button from '~/components/primitives/Button.vue'
+import Button from '~/components/primitive/Button.vue'
 
 definePageMeta({ layout: 'auth' })
 
 const form = reactive({ username: '', password: '', error: '' })
-
+const { query } = useRoute()
 const { signIn, data: auth } = useAuth()
 const loading = ref(false)
+const redirect = computed(() => [query.redirect].flat().at(0) ?? '/')
 
 const login = async () => {
   if (loading.value === true) {
@@ -70,10 +71,16 @@ const login = async () => {
   loading.value = true
 
   return signIn(form, { redirect: false })
-    .then(() => { navigateTo('/') })
+    .then(() => { navigateTo(redirect.value) })
     .catch(e => form.error = e.data.message)
     .finally(() => loading.value = false)
 }
+
+onBeforeMount(() => {
+  if (auth.value) {
+    navigateTo(redirect.value)
+  }
+})
 </script>
 
 <style lang="scss">
