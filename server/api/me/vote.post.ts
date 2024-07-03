@@ -1,11 +1,18 @@
 import dayjs from 'dayjs'
 import { getIP } from '~/server/utils/ip'
+import { checkEligible } from './vote.get'
 
 
 export default defineEventHandler(async event => {
   const { user, drizzle } = await event.context.auth()
   const vote = useVote()
   const ip = getIP(event)
+
+  const latest = await checkEligible(drizzle, user.id, ip)
+
+  if (latest && latest.available == false) {
+    return { success: false }
+  }
 
   const attend = await drizzle.query.attends.findFirst({
     where: ({ user_id, vote_ip }, { eq, or }) => or(
