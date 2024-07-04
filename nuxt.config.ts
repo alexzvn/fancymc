@@ -40,5 +40,9 @@ export default defineNuxtConfig({
       user: 'root',
       pass: 'abc@123'
     }
+  },
+
+  routeRules: {
+    '/**': { prerender: false }
   }
 })

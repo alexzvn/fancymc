@@ -1,30 +1,43 @@
 import { useSessionStorage } from "@vueuse/core"
 
-export default defineNuxtPlugin(async () => {
-  const { auth, cookie, refresh, token } = useAuthState()
 
-  if (import.meta.browser && import.meta.dev) {
-    Object.assign(window, { useRequest })
-  }
+export default defineNuxtPlugin({
+  enforce: 'pre',
 
-  if (!cookie.value) {
-    return
-  }
+  hooks: {
+    'app:created': async () => {
+      const { auth, token } = useAuth()
 
-  if (import.meta.server) {
-    auth.value = await $fetch('/api/auth/session', {
-      headers: { Authorization: token.value! }
-    })
-  }
+      if (! import.meta.server || !token.value) {
+        return console.log('Not server');
+      }
 
-  const session = useSessionStorage<any>('auth.user', undefined, {
-    serializer: {
-      read: JSON.parse,
-      write: JSON.stringify
+      auth.value = await $fetch('/api/auth/session', {
+        headers: { Authorization: token.value! }
+      })
     }
-  })
+  },
 
-  auth.value = session.value
+  async setup() {
+    const { auth, cookie, refresh, token } = useAuthState()
 
-  await refresh().finally(() => session.value = auth.value)
+    if (import.meta.browser && import.meta.dev) {
+      Object.assign(window, { useRequest })
+    }
+
+    if (!cookie.value) {
+      return
+    }
+  
+    const session = useSessionStorage<any>('auth.user', undefined, {
+      serializer: {
+        read: JSON.parse,
+        write: JSON.stringify
+      }
+    })
+
+    auth.value = session.value
+
+    await refresh().finally(() => session.value = auth.value)
+  }
 })
