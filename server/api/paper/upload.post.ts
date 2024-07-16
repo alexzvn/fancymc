@@ -36,6 +36,8 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+  console.log("upload item:", attributes.name);
+  
 
   const form = new FormData()
 

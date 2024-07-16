@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   ],
 
   strapi: {
-    url: process.env.STRAPI_URL
+    url: process.env.NUXT_STRAPI_URL
   },
 
   app: {
