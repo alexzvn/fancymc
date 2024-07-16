@@ -13,7 +13,12 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@nuxtjs/tailwindcss',
     "@nuxt/icon",
+    '@nuxtjs/strapi'
   ],
+
+  strapi: {
+    url: process.env.STRAPI_URL
+  },
 
   app: {
     rootAttrs: { 'data-theme': 'fancy' },
@@ -26,6 +31,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     app: {
       secret: '0x00x0x0x0x0x'
+    },
+
+    strapi: {
+      secret: '0x0000000000'
     },
 
     votifier: {

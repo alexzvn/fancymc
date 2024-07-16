@@ -9,7 +9,7 @@ const extractToken = (authHeaderValue: string) => {
   return token
 }
 
-const ensureAuth = (event: H3Event) => {
+export const ensureAuth = (event: H3Event) => {
   const authHeaderValue = getRequestHeader(event, 'authorization')
   if (typeof authHeaderValue === 'undefined') {
     throw createError({ statusCode: 403, statusMessage: 'Need to pass valid Bearer-authorization header to access this endpoint' })

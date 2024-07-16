@@ -9,7 +9,7 @@ export default defineNuxtPlugin({
       const { auth, token } = useAuth()
 
       if (! import.meta.server || !token.value) {
-        return console.log('Not server');
+        return
       }
 
       auth.value = await $fetch('/api/auth/session', {
