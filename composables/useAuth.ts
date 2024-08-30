@@ -3,7 +3,12 @@ import type { H3Error } from 'h3'
 type Credential = {
   email?: string
   username?: string
-  password: string
+  password: string,
+
+  /**
+   * Cloudflare challenge token
+   */
+  challenge: string
 }
 
 type User = {

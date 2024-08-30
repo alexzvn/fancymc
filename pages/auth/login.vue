@@ -25,6 +25,10 @@
                 <input v-model="form.password" type="password" class="input input-bordered font-mono" placeholder="Mật khẩu của bạn" required>
               </div>
 
+              <div class="flex justify-center mt-3">
+                <CloudflareTurnstile ref="turnstile" />
+              </div>
+
               <div class="text-center">
                 <Button class="mt-10" type="submit">
                   <span class="mx-7 flex">
@@ -53,15 +57,19 @@
 </template>
 
 <script lang="ts" setup>
+import CloudflareTurnstile from '~/components/CloudflareTurnstile.vue'
 import Button from '~/components/primitive/Button.vue'
 
 definePageMeta({ layout: 'auth' })
 
-const form = reactive({ username: '', password: '', error: '' })
+const form = reactive({
+  username: '', password: '', error: '', challenge: ''
+})
 const { query } = useRoute()
 const { signIn, auth } = useAuth()
 const loading = ref(false)
 const redirect = computed(() => [query.redirect].flat().at(0) ?? '/')
+const turnstile = ref<InstanceType<typeof CloudflareTurnstile>>()
 
 const login = async () => {
   if (loading.value === true) {
@@ -70,10 +78,16 @@ const login = async () => {
 
   loading.value = true
 
-  return signIn(form)
-    .then(() => { navigateTo(redirect.value) })
-    .catch(e => form.error = e.data.message)
-    .finally(() => loading.value = false)
+  try {
+    form.challenge = await turnstile.value!.obtain('login')
+    await signIn(form)
+    navigateTo(redirect.value)
+  } catch (e: any) {
+    form.error = e.data.message
+  }
+  finally {
+    loading.value = false
+  }
 }
 
 onBeforeMount(() => {

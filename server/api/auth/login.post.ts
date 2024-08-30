@@ -1,6 +1,7 @@
 import { createError, eventHandler } from 'h3'
 import { useValidatedBody, z } from 'h3-zod'
 import { Misc } from '@amber.js/core'
+import { captcha } from '~/server/utils/captcha'
 
 const falseError = createError({
   statusCode: 400,
@@ -18,8 +19,17 @@ export type JWTPayload = {
 export default eventHandler(async event => {
   const body = await useValidatedBody(event, z.object({
     username: z.string().min(1).max(255),
-    password: z.string().min(1).max(255)
+    password: z.string().min(1).max(255),
+    challenge: z.string().max(2048)
   }))
+
+  const { success: isPassCaptcha } = await captcha(event, body.challenge)
+
+  if (isPassCaptcha === false) {
+    throw createError({
+      statusCode: 400, message: 'Yêu cầu không hợp lệ, xin hay thử lại!'
+    })
+  }
 
   const drizzle = await useDrizzle()
   const jwt = useJWT()

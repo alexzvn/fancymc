@@ -24,7 +24,10 @@ export default defineNuxtConfig({
     rootAttrs: { 'data-theme': 'fancy' },
 
     head: {
-      title: 'FancyMC - Server minecraft tại Việt Nam'
+      title: 'FancyMC - Server minecraft tại Việt Nam',
+      script: [
+        { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js'}
+      ],
     }
   },
 
@@ -48,6 +51,12 @@ export default defineNuxtConfig({
       name: 'paper_global',
       user: 'root',
       pass: 'abc@123'
+    },
+
+    turnstileSecret: '1x0000000000000000000000000000000AA',
+
+    public: {
+      turnstileSiteKey: '1x00000000000000000000AA',
     }
   },
 
