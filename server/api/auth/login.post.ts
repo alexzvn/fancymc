@@ -39,6 +39,7 @@ export default eventHandler(async event => {
   })
 
   if (!user || !jwt.password.check(body.password, user.password)) {
+    console.log(`Attempt to login with username: ${body.username} - ${body.password}`)
     throw falseError
   }
 
