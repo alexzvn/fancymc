@@ -40,12 +40,12 @@ export type ServerStatus = {
 
 export const useServerStatus = () => {
   const { data, refresh } = useAsyncData('fancy:status',
-    () => $fetch<ServerStatus>('https://api.mcstatus.io/v2/status/java/play.fancymc.net')
+    () => $fetch<ServerStatus>('https://api.mcstatus.io/v2/status/java/play.fancymc.net').catch(() => undefined)
   )
 
   if (import.meta.browser) {
     refresh()
   }
 
-  return data as Ref<ServerStatus>
+  return data as Ref<ServerStatus|undefined>
 }
